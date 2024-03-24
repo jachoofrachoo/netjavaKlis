@@ -42,9 +42,9 @@ namespace Weather_Application
 
                 picIcon.ImageLocation = "https://openweathermap.org/img/w/" + Info.weather[0].icon + ".png";
                 labCondition.Text = Info.weather[0].main;
-                double tempKelvin = Info.main.temp; //fewfwfw
+                double tempKelvin = Info.main.temp;
                 double tempCelsius = tempKelvin - 273.15;
-                labDetails.Text = tempCelsius.ToString("0.##");
+                labDetails.Text = "Temperatura: " + tempCelsius.ToString("0.##") + " °C";
                 labSunset.Text = convertDateTime(Info.sys.sunset).ToShortTimeString();
                 labSunrise.Text = convertDateTime(Info.sys.sunrise).ToShortTimeString();
 
