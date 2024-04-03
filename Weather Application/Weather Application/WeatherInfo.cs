@@ -6,6 +6,21 @@ using System.Threading.Tasks;
 
 namespace Weather_Application
 {
+
+    public class WeatherData
+    {
+        public int Id { get; set; }
+        public string City { get; set; }
+        public string MainCondition { get; set; }
+        public string Description { get; set; }
+        public string Icon { get; set; }
+        public double Temperature { get; set; }
+        public DateTime Sunrise { get; set; }
+        public DateTime Sunset { get; set; }
+        public double WindSpeed { get; set; }
+        public double Pressure { get; set; }
+    }
+
     internal class WeatherInfo
     {
         public class coord

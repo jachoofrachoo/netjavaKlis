@@ -49,7 +49,7 @@ namespace Weather_Application
                 labSunrise.Text = convertDateTime(Info.sys.sunrise).ToShortTimeString();
 
                 labWindSpeed.Text = Info.wind.speed.ToString();
-                labPressure.Text = Info.main.pressure.ToString();
+                labPressure.Text = Info.main.pressure.ToString() + " hPa";
 
             }
         }
