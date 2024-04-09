@@ -1,13 +1,17 @@
 ﻿using System;
-using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MatrixMultiplier
+namespace MatrixMultiplierParallel
 {
     public class MatrixOperations
     {
-        public static int[,] GenerateRandomMatrix(int rows, int columns, Random random)
+        public static int[,] GenerateRandomMatrix(int rows, int columns, int seed)
         {
             int[,] matrix = new int[rows, columns];
+            Random random = new Random(seed);
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
@@ -43,46 +47,19 @@ namespace MatrixMultiplier
             int rowsA = matrixA.GetLength(0);
             int columnsB = matrixB.GetLength(1);
             int[,] result = new int[rowsA, columnsB];
-            Thread[] threads = new Thread[threadCount];
 
-            for (int i = 0; i < threadCount; i++)
-            {
-                threads[i] = new Thread((object obj) =>
-                {
-                    int threadIndex = (int)obj;
-                    MultiplyMatricesPartial(matrixA, matrixB, result, threadCount, threadIndex);
-                });
-                threads[i].Start(i);
-            }
-
-            foreach (Thread thread in threads)
-            {
-                thread.Join();
-            }
-
-            return result;
-        }
-
-        public static void MultiplyMatricesPartial(int[,] matrixA, int[,] matrixB, int[,] result, int threadCount, int threadIndex)
-        {
-            int rowsA = matrixA.GetLength(0);
-            int columnsB = matrixB.GetLength(1);
-            int columnsA = matrixA.GetLength(1);
-
-            int rowsPerThread = rowsA / threadCount;
-            int startRow = threadIndex * rowsPerThread;
-            int endRow = (threadIndex == threadCount - 1) ? rowsA : (threadIndex + 1) * rowsPerThread;
-
-            for (int i = startRow; i < endRow; i++)
+            Parallel.For(0, rowsA, i =>
             {
                 for (int j = 0; j < columnsB; j++)
                 {
-                    for (int k = 0; k < columnsA; k++)
+                    for (int k = 0; k < matrixA.GetLength(1); k++)
                     {
                         result[i, j] += matrixA[i, k] * matrixB[k, j];
                     }
                 }
-            }
+            });
+
+            return result;
         }
 
         public static bool CheckMatrixEquality(int[,] matrixA, int[,] matrixB)
@@ -99,7 +76,7 @@ namespace MatrixMultiplier
 
             for (int i = 0; i < rowsA; i++)
             {
-                for (int j = 0; j < columnsA; j++) 
+                for (int j = 0; j < columnsA; j++)
                 {
                     if (matrixA[i, j] != matrixB[i, j])
                     {
@@ -112,3 +89,4 @@ namespace MatrixMultiplier
         }
     }
 }
+

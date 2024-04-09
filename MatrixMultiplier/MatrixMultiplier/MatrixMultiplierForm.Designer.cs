@@ -34,6 +34,8 @@
             label2 = new Label();
             calculateButton = new Button();
             resultLabel = new Label();
+            seedTextBox = new TextBox();
+            label3 = new Label();
             SuspendLayout();
             // 
             // matrixSizeTextBox
@@ -76,7 +78,7 @@
             calculateButton.TabIndex = 4;
             calculateButton.Text = "Calculate";
             calculateButton.UseVisualStyleBackColor = true;
-            calculateButton.Click += new System.EventHandler(this.MultiplyButton_Click);
+            calculateButton.Click += MultiplyButton_Click;
             // 
             // resultLabel
             // 
@@ -87,18 +89,36 @@
             resultLabel.TabIndex = 5;
             resultLabel.Text = "N/A";
             // 
-            // Form1
+            // seedTextBox
+            // 
+            seedTextBox.Location = new Point(219, 282);
+            seedTextBox.Name = "seedTextBox";
+            seedTextBox.Size = new Size(244, 39);
+            seedTextBox.TabIndex = 6;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(53, 285);
+            label3.Name = "label3";
+            label3.Size = new Size(82, 32);
+            label3.TabIndex = 7;
+            label3.Text = "Ziarno";
+            // 
+            // MatrixMultiplierForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1254, 738);
+            Controls.Add(label3);
+            Controls.Add(seedTextBox);
             Controls.Add(resultLabel);
             Controls.Add(calculateButton);
             Controls.Add(label2);
             Controls.Add(threadCountTextBox);
             Controls.Add(label1);
             Controls.Add(matrixSizeTextBox);
-            Name = "Form1";
+            Name = "MatrixMultiplierForm";
             Text = "Form1";
             ResumeLayout(false);
             PerformLayout();
@@ -112,5 +132,7 @@
         private Label label2;
         private Button calculateButton;
         private Label resultLabel;
+        private TextBox seedTextBox;
+        private Label label3;
     }
 }

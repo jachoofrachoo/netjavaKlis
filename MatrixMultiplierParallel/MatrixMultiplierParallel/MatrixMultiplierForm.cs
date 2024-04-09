@@ -1,9 +1,10 @@
+using MatrixMultiplierParallel;
 using System;
 using System.Diagnostics;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MatrixMultiplier
+namespace MatrixMultiplierParallel
 {
     public partial class MatrixMultiplierForm : Form
     {
@@ -23,10 +24,8 @@ namespace MatrixMultiplier
                 return;
             }
 
-            Random random = new Random(seed);
-
-            int[,] matrixA = MatrixOperations.GenerateRandomMatrix(matrixSize, matrixSize, random);
-            int[,] matrixB = MatrixOperations.GenerateRandomMatrix(matrixSize, matrixSize, random);
+            int[,] matrixA = MatrixOperations.GenerateRandomMatrix(matrixSize, matrixSize, seed);
+            int[,] matrixB = MatrixOperations.GenerateRandomMatrix(matrixSize, matrixSize, seed);
 
             // Wyœwietl macierze wejœciowe (mo¿esz zakomentowaæ, gdy nie jest potrzebne)
             //ShowMatrix(matrixA, "Macierz A:");
@@ -70,4 +69,3 @@ namespace MatrixMultiplier
         }
     }
 }
-
