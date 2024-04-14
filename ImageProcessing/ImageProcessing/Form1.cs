@@ -25,7 +25,7 @@ namespace ImageProcessing
             }
         }
 
-        private void ApplyFiltersButton_Click(object sender, EventArgs e)
+        private async void ApplyFiltersButton_Click(object sender, EventArgs e)
         {
             if (img == null)
             {
@@ -35,13 +35,30 @@ namespace ImageProcessing
 
             Bitmap[] processedImages = new Bitmap[4];
 
-            // Apply filters sequentially
-            processedImages[0] = ApplyGrayscale(new Bitmap(img));
-            processedImages[1] = ApplyThreshold(new Bitmap(img));
-            processedImages[2] = ApplyNegative(new Bitmap(img));
-            processedImages[3] = ApplyMirror(new Bitmap(img));
+            
+            await Task.Run(() =>
+            {
+                Parallel.For(0, 4, i =>
+                {
+                    switch (i)
+                    {
+                        case 0: // szarosc
+                            processedImages[i] = ApplyGrayscale(new Bitmap(img));
+                            break;
+                        case 1: // progowanie
+                            processedImages[i] = ApplyThreshold(new Bitmap(img));
+                            break;
+                        case 2: // Negatyw
+                            processedImages[i] = ApplyNegative(new Bitmap(img));
+                            break;
+                        case 3: // lustrzane
+                            processedImages[i] = ApplyMirror(new Bitmap(img));
+                            break;
+                    }
+                });
+            });
 
-            // Display processed images
+            // wyswietlanie
             pictureBox2.Image = processedImages[0];
             pictureBox3.Image = processedImages[1];
             pictureBox4.Image = processedImages[2];

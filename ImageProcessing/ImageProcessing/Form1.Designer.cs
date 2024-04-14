@@ -45,19 +45,22 @@
             // 
             // openImageButton
             // 
+            openImageButton.BackColor = SystemColors.AppWorkspace;
+            openImageButton.Font = new Font("Segoe UI", 16.125F, FontStyle.Regular, GraphicsUnit.Point, 238);
             openImageButton.Location = new Point(641, 226);
             openImageButton.Name = "openImageButton";
-            openImageButton.Size = new Size(172, 160);
+            openImageButton.Size = new Size(202, 160);
             openImageButton.TabIndex = 0;
-            openImageButton.Text = "Load";
-            openImageButton.UseVisualStyleBackColor = true;
+            openImageButton.Text = "Zaladuj";
+            openImageButton.UseVisualStyleBackColor = false;
             openImageButton.Click += OpenImageButton_Click;
             // 
             // applyFiltersButton
             // 
+            applyFiltersButton.Font = new Font("Segoe UI", 16.125F, FontStyle.Regular, GraphicsUnit.Point, 238);
             applyFiltersButton.Location = new Point(641, 408);
             applyFiltersButton.Name = "applyFiltersButton";
-            applyFiltersButton.Size = new Size(172, 160);
+            applyFiltersButton.Size = new Size(202, 160);
             applyFiltersButton.TabIndex = 1;
             applyFiltersButton.Text = "Zastosuj";
             applyFiltersButton.UseVisualStyleBackColor = true;
@@ -68,6 +71,7 @@
             pictureBox1.Location = new Point(25, 30);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(602, 726);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
             // 
