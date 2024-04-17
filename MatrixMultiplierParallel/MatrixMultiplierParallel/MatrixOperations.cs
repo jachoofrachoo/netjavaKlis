@@ -16,7 +16,7 @@ namespace MatrixMultiplierParallel
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    matrix[i, j] = random.Next(10); // Przykładowe zakres wartości od 0 do 9
+                    matrix[i, j] = random.Next(10);
                 }
             }
             return matrix;
@@ -48,7 +48,10 @@ namespace MatrixMultiplierParallel
             int columnsB = matrixB.GetLength(1);
             int[,] result = new int[rowsA, columnsB];
 
-            Parallel.For(0, rowsA, i =>
+            ParallelOptions options = new ParallelOptions();
+            options.MaxDegreeOfParallelism = threadCount;
+
+            Parallel.For(0, rowsA, options, i =>
             {
                 for (int j = 0; j < columnsB; j++)
                 {
@@ -61,6 +64,7 @@ namespace MatrixMultiplierParallel
 
             return result;
         }
+
 
         public static bool CheckMatrixEquality(int[,] matrixA, int[,] matrixB)
         {
