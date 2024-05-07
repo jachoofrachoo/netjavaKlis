@@ -1,0 +1,107 @@
+﻿@page "/weather"
+@rendermode InteractiveServer
+@attribute [StreamRendering]
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data.</p>
+
+<p role="status">Warm days: @warmDays</p>
+
+<button class="btn btn-primary" @onclick="FilterWarmDays">Filter Warm Days</button>
+
+<button class="btn btn-primary" @onclick="Restore">Restore</button>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in filteredForecasts ?? forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<input class="form-control" @oninput="@Input" />
+@code {
+    private WeatherForecast[]? forecasts;
+    private WeatherForecast[]? filteredForecasts; // Dodanie tablicy zfiltrowanych danych
+    private int warmDays = 0; // Dodanie zmiennej przechowującej liczbę ciepłych dni
+
+    private void CountWarmDays()
+    {
+        warmDays = forecasts.Count(f => f.TemperatureC > 15);
+    }
+
+    // Metoda filtrowania ciepłych dni
+    private void FilterWarmDays()
+    {
+        filteredForecasts = forecasts?.Where(f => f.TemperatureC > 15).ToArray();
+    }
+
+    // Metoda przywracająca oryginalną tabelę
+    private void Restore()
+    {
+        filteredForecasts = null;
+    }
+
+    // Metoda filtrująca wprowadzone dane
+    private void Input(ChangeEventArgs arg)
+    {
+        var filterText = arg.Value?.ToString()?.ToLower();
+        if (string.IsNullOrWhiteSpace(filterText))
+        {
+            filteredForecasts = null;
+            return;
+        }
+
+        filteredForecasts = forecasts?.Where(f => f.Summary?.ToLower()?.Contains(filterText) ?? false).ToArray();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(500);
+
+        var startDate = DateOnly.FromDateTime(DateTime.Now);
+        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+        forecasts = Enumerable.Range(1, 10).Select(index => new WeatherForecast // Zmiana na 10 dni prognozy
+            {
+                Date = startDate.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = summaries[Random.Shared.Next(summaries.Length)]
+            }).ToArray();
+
+        // Zliczanie ciepłych dni
+        CountWarmDays();
+    }
+
+    private class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? Summary { get; set; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}

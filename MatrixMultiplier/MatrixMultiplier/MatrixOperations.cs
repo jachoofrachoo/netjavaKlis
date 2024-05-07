@@ -60,7 +60,7 @@ namespace MatrixMultiplier
                 thread.Join();
             }
 
-            return result;
+            return result;`                 
         }
 
         public static void MultiplyMatricesPartial(int[,] matrixA, int[,] matrixB, int[,] result, int threadCount, int threadIndex)

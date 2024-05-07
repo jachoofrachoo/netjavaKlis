@@ -124,15 +124,16 @@ namespace ImageProcessing
 
             for (int y = 0; y < processedImage.Height; y++)
             {
-                for (int x = 0; x < processedImage.Width / 2; x++)
+                for (int x = 0; x < processedImage.Width; x++)
                 {
                     Color originalColor = image.GetPixel(x, y);
                     processedImage.SetPixel(x, y, originalColor);
-                    processedImage.SetPixel(processedImage.Width - 1 - x, y, originalColor);
+                    processedImage.SetPixel(processedImage.Width - 1 - x, y, originalColor);         3hiofionf3
                 }
             }
 
             return processedImage;
         }
+
     }
 }
