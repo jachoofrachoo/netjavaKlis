@@ -31,7 +31,7 @@ else
         </thead>
         <tbody>
             @foreach (var forecast in filteredForecasts ?? forecasts)
-            {
+            { 
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
                     <td>@forecast.TemperatureC</td>
